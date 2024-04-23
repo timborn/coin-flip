@@ -37,38 +37,46 @@ def flip_coin(probability_of_heads = PROBABILITY_OF_HEADS):
 ### and how many flips in a game.
 ### 
 ### Work out which side you like ("heads") and how much to bet.
-### That is the pair that should be returned.
+### Return the name of the strategy, "heads", bet amt
 ###
-def user_bets(balance):
+def user_bets(balance, idx=2):
+  dispatch = {
+    0: user_bets_simpleton,
+    1: user_bets_thirds,
+    2: user_bets_cheapskate,
+    3: user_bets_ten,
+    4: user_bets_ten_percent
+  }
   # return user_bets_simpleton(balance)
   # return user_bets_thirds(balance)
   # return user_bets_cheapskate(balance)
   # return user_bets_ten(balance)
-  return user_bets_ten_percent(balance)
+  # return user_bets_ten_percent(balance)
+  return dispatch[idx](balance)
 
 ### I AM A SIMPLETON
 def user_bets_simpleton(balance):
-  return "heads", 5
+  return "simpleton", "heads", 5
 
 ### THIRDS
 def user_bets_thirds(balance):
-  return "heads", int(balance/3)
+  return "thirds", "heads", int(balance/3)
 
 ### CHEAPSKATE
 def user_bets_cheapskate(balance):
-  return "heads", 2.50
+  return "cheapskate", "heads", 2.50
 
 ### TEN
 def user_bets_ten(balance):
-  return "heads", min(10, balance)
+  return "ten", "heads", min(10, balance)
 
 ### TEN PERCENT
 def user_bets_ten_percent(balance):
-  return "heads", int(balance/10)
+  return "ten percent", "heads", int(balance/10)
 
 
 def play_the_game():
-  ### returns final balance and number of flips (watch out for fail on final)
+  ### returns strategy string and balance over time (array)
   balance=INITIAL_BALANCE
 
   # keep track of balance for all [0..NFLIPS-1] turns
@@ -82,47 +90,37 @@ def play_the_game():
 
     # Flip an unfair coin 
     coin_flip = flip_coin()
-    guess, bet = user_bets(balance)
+    strategy, guess, bet = user_bets(balance)
   
     # a bit of error checking, please
     if (bet > balance):
-      # print("you tried to bet ", bet, " but you only have ", balance)
       bet=0
   
-    # Print the result.
-    # print(coin_flip, guess)
     if coin_flip == guess:
-      # print("win  ", end="")
       balance += bet
     else:
-      # print("lose ", end="")
       balance -= bet
-  
-    # print(balance)
   
     balance_over_time[i] = balance
     if (balance <=0 ): 
-      # print("wah wah wah.  flip #", i+1)
       break
 
   # return balance, i+1	# zero based iter
-  return balance_over_time
+  return strategy, balance_over_time
 
-def simulate_many_games(games=10):
-# returns an array of arrays of the balance over time
+def simulate_many_games(games):
+# returns strategy name and an array of arrays of the balance over time
   results = []	# it's an array - is this necessary?
   for i in range(games):
-#     winnings, n = play_the_game()
-#     ### TODO: what data structure to keep results so I can analyze the set?
-#     print ("After ", n, " flips the final balance was ", winnings)
-    results.append(play_the_game())
+    strategy, ary = play_the_game()
+    results.append(ary)
 
   # print(results)
-  return results
+  return strategy, results
   
 ### main
 
-all_ys = simulate_many_games(NGAMES)
+strategy, all_ys = simulate_many_games(NGAMES)
 all_xs = [np.arange(NFLIPS, dtype='int') for _ in range(NGAMES)]
 
 # TODO: how many simulations failed?  Seems like you can count last
@@ -130,6 +128,7 @@ all_xs = [np.arange(NFLIPS, dtype='int') for _ in range(NGAMES)]
 broke = 0
 poor = 0
 winner = 0
+print("strategy: ", strategy)
 for ys in all_ys:
   if ys[NFLIPS-1] == 0: broke += 1
   if ys[NFLIPS-1] < INITIAL_BALANCE: poor += 1
