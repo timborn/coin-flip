@@ -1,6 +1,6 @@
 import random
 
-def flip_coin(probability_of_heads):
+def flip_coin(probability_of_heads = 0.6):
   """Flips an unfair coin with the given probability of heads.
 
   Args:
@@ -19,7 +19,7 @@ def flip_coin(probability_of_heads):
 # Example usage:
 
 # Flip an unfair coin with a 70% chance of heads.
-coin_flip = flip_coin(0.7)
+coin_flip = flip_coin()
 
 # Print the result.
 print(coin_flip)
