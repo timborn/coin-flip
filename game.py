@@ -27,8 +27,11 @@ def flip_coin(probability_of_heads = PROBABILITY_OF_HEADS):
   else:
     return "tails"
 
+def user_bets(balance):
+  return user_bets_simpleton(balance)
+
 ### I AM A SIMPLETON
-def user_bets(balance=0):
+def user_bets_simpleton(balance=0):
   return "heads", 5
 
 
