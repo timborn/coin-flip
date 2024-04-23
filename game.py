@@ -16,10 +16,24 @@ def flip_coin(probability_of_heads = 0.6):
   else:
     return "tails"
 
+def user_bets(balance=0):
+  return "heads", 10
+
 # Example usage:
 
-# Flip an unfair coin with a 70% chance of heads.
-coin_flip = flip_coin()
+balance=25
+for i in range(10):
+  # Flip an unfair coin 
+  coin_flip = flip_coin()
+  guess, bet = user_bets(balance)
 
-# Print the result.
-print(coin_flip)
+  # Print the result.
+  # print(coin_flip, guess)
+  if coin_flip == guess:
+    print("win")
+    balance += bet
+  else:
+    print("lose")
+    balance -= bet
+
+  print(balance)

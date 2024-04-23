@@ -10,6 +10,7 @@ on each flip.
 Start with $25.  Game over when you get to zero.  n=300 flips
 
 https://elmwealth.com/coin-flip/
+See Also: The Missing Billionaires (book)
 
 Getting Started
 ===============
