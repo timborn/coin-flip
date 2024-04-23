@@ -40,6 +40,11 @@ def play_the_game():
   balance_over_time = [0] * NFLIPS
 
   for i in range(NFLIPS):
+    # when we plot, make sure it looks like we all started from the same place
+    if i==0: 
+      balance_over_time[i] = INITIAL_BALANCE
+      continue
+
     # Flip an unfair coin 
     coin_flip = flip_coin()
     guess, bet = user_bets(balance)
