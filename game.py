@@ -9,6 +9,7 @@ from plotly.offline import plot
 PROBABILITY_OF_HEADS = 0.6
 NFLIPS = 300
 NGAMES = 1000
+INITIAL_BALANCE = 25
 
 def flip_coin(probability_of_heads = PROBABILITY_OF_HEADS):
   """Flips an unfair coin with the given probability of heads.
@@ -33,7 +34,7 @@ def user_bets(balance=0):
 
 def play_the_game():
   ### returns final balance and number of flips (watch out for fail on final)
-  balance=25
+  balance=INITIAL_BALANCE
 
   # keep track of balance for all [0..NFLIPS-1] turns
   balance_over_time = [0] * NFLIPS
@@ -81,11 +82,21 @@ def simulate_many_games(games=10):
   
 ### main
 
-# TODO: how many simulations failed?  Seems like you can count last
-# array element == 0 to see failure
 all_ys = simulate_many_games(NGAMES)
 all_xs = [np.arange(NFLIPS, dtype='int') for _ in range(NGAMES)]
 
+# TODO: how many simulations failed?  Seems like you can count last
+# array element == 0 to see failure
+broke = 0
+poor = 0
+for ys in all_ys:
+  if ys[NFLIPS-1] == 0: broke += 1
+  if ys[NFLIPS-1] < INITIAL_BALANCE: poor += 1
+
+print("Out of ", NGAMES, " games:")
+print(poor, " lost money")
+print(broke, " went broke")
+print((NGAMES-poor)/NGAMES, " % success")
 
 # append nan to each segment
 all_xs_with_nan = [np.concatenate((xs, [np.nan])) for xs in all_xs]
