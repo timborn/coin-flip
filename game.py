@@ -48,10 +48,10 @@ def play_the_game():
     # print(balance)
   
     if (balance <=0 ): 
-      # print("wah wah wah.  flip #", i)
+      # print("wah wah wah.  flip #", i+1)
       break
 
-  return balance, i
+  return balance, i+1	# zero based iter
 
 ### main
 winnings, n = play_the_game()
