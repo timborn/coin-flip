@@ -10,6 +10,7 @@ PROBABILITY_OF_HEADS = 0.6
 NFLIPS = 300
 NGAMES = 1000
 INITIAL_BALANCE = 25
+WINNING_BALANCE = 250	# in the original game, >=$250 is a winner
 
 def flip_coin(probability_of_heads = PROBABILITY_OF_HEADS):
   """Flips an unfair coin with the given probability of heads.
@@ -27,11 +28,22 @@ def flip_coin(probability_of_heads = PROBABILITY_OF_HEADS):
   else:
     return "tails"
 
+###
+### YOU ARE HERE
+###
+### This is your strategy for betting.
+### You know your current balance.
+### If needed, we could provide which flip this is, 
+### and how many flips in a game.
+### 
+### Work out which side you like ("heads") and how much to bet.
+### That is the pair that should be returned.
+###
 def user_bets(balance):
   return user_bets_simpleton(balance)
 
 ### I AM A SIMPLETON
-def user_bets_simpleton(balance=0):
+def user_bets_simpleton(balance):
   return "heads", 5
 
 
@@ -97,14 +109,18 @@ all_xs = [np.arange(NFLIPS, dtype='int') for _ in range(NGAMES)]
 # array element == 0 to see failure
 broke = 0
 poor = 0
+winner = 0
 for ys in all_ys:
   if ys[NFLIPS-1] == 0: broke += 1
   if ys[NFLIPS-1] < INITIAL_BALANCE: poor += 1
+  if ys[NFLIPS-1] >= WINNING_BALANCE: winner += 1
 
 print("Out of ", NGAMES, " games:")
 print(poor, " lost money")
 print(broke, " went broke")
-print((NGAMES-poor)/NGAMES, " % success")
+print(winner, " exceeded ", WINNING_BALANCE)
+print(((NGAMES-poor)/NGAMES)*100, " % didn't fail")
+print((winner/NGAMES)*100, " % success")
 
 # append nan to each segment
 all_xs_with_nan = [np.concatenate((xs, [np.nan])) for xs in all_xs]
