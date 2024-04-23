@@ -1,10 +1,10 @@
-# TODO: graph should show we always start with the same balance.  
-# Another off-by-one error
+# TODO: range check strategy selector input from cmd line
 
 import random
 import numpy as np
 import plotly.graph_objs as go
 from plotly.offline import plot
+import sys
 
 PROBABILITY_OF_HEADS = 0.6
 NFLIPS = 300
@@ -39,7 +39,7 @@ def flip_coin(probability_of_heads = PROBABILITY_OF_HEADS):
 ### Work out which side you like ("heads") and how much to bet.
 ### Return the name of the strategy, "heads", bet amt
 ###
-def user_bets(balance, idx=2):
+def user_bets(balance, idx):
   dispatch = {
     0: user_bets_simpleton,
     1: user_bets_thirds,
@@ -75,7 +75,7 @@ def user_bets_ten_percent(balance):
   return "ten percent", "heads", int(balance/10)
 
 
-def play_the_game():
+def play_the_game(strat_selector):
   ### returns strategy string and balance over time (array)
   balance=INITIAL_BALANCE
 
@@ -90,7 +90,7 @@ def play_the_game():
 
     # Flip an unfair coin 
     coin_flip = flip_coin()
-    strategy, guess, bet = user_bets(balance)
+    strategy, guess, bet = user_bets(balance, strat_selector)
   
     # a bit of error checking, please
     if (bet > balance):
@@ -108,11 +108,11 @@ def play_the_game():
   # return balance, i+1	# zero based iter
   return strategy, balance_over_time
 
-def simulate_many_games(games):
+def simulate_many_games(games, strat_selector):
 # returns strategy name and an array of arrays of the balance over time
   results = []	# it's an array - is this necessary?
   for i in range(games):
-    strategy, ary = play_the_game()
+    strategy, ary = play_the_game(strat_selector)
     results.append(ary)
 
   # print(results)
@@ -120,24 +120,30 @@ def simulate_many_games(games):
   
 ### main
 
-strategy, all_ys = simulate_many_games(NGAMES)
+strat_selector = 0
+if len(sys.argv) >= 2:
+  strat_selector = int(sys.argv[1])
+
+strategy, all_ys = simulate_many_games(NGAMES, strat_selector)
 all_xs = [np.arange(NFLIPS, dtype='int') for _ in range(NGAMES)]
 
-# TODO: how many simulations failed?  Seems like you can count last
-# array element == 0 to see failure
+# some stats
 broke = 0
 poor = 0
 winner = 0
+maxm=0
 print("strategy: ", strategy)
 for ys in all_ys:
   if ys[NFLIPS-1] == 0: broke += 1
   if ys[NFLIPS-1] < INITIAL_BALANCE: poor += 1
   if ys[NFLIPS-1] >= WINNING_BALANCE: winner += 1
+  if ys[NFLIPS-1] > maxm: maxm = ys[NFLIPS-1]
 
 print("Out of ", NGAMES, " games:")
 print(poor, " lost money")
 print(broke, " went broke")
 print(winner, " exceeded ", WINNING_BALANCE)
+print("max final value: ", maxm)
 print(((NGAMES-poor)/NGAMES)*100, " % didn't fail")
 print((winner/NGAMES)*100, " % success")
 
