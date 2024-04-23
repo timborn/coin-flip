@@ -12,15 +12,30 @@ Start with $25.  Game over when you get to zero.  n=300 flips
 https://elmwealth.com/coin-flip/
 
 Getting Started
+===============
 
-#? one-off crap to create an env in git
+### one-off crap to create an env in git
 #? python3 -m venv --prompt "pyenv> " env
 #? git init
 #? echo 'env' > .gitignore	# the env folder we just created is not in git
 
+### clean start, new machine
 git clone repo
-source env/bin/activate	# to start using the environment
-deactivate		# to stop  using the environment
-pip install <pkg>	# done while inside env
-pip freeze > requirements.txt	# outside env?  top level?  
 pip install -r requirements.txt	# install all needed pkgs
+
+### typical usage pattern
+source env/bin/activate	# to start using the environment
+pip install <pkg>	# done while inside env
+pip freeze > requirements.txt	# top level, above env!
+deactivate		# to stop  using the environment
+
+Developer Notes
+===============
+My intention is to create a simulation with zero human intervention.
+The algorithm that decides how much to bet each time is written in a 
+function that returns: heads/tails and amount to bet.
+
+The results will be how many flips you survived, and if all of them, 
+how much money you had left.
+
+Extra credit to run swarms and graph the balances, ala Monte Carlo.
