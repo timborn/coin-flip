@@ -1,3 +1,6 @@
+# TODO: graph should show we always start with the same balance.  
+# Another off-by-one error
+
 import random
 import numpy as np
 import plotly.graph_objs as go
@@ -5,7 +8,7 @@ from plotly.offline import plot
 
 PROBABILITY_OF_HEADS = 0.6
 NFLIPS = 300
-NGAMES = 5
+NGAMES = 1000
 
 def flip_coin(probability_of_heads = PROBABILITY_OF_HEADS):
   """Flips an unfair coin with the given probability of heads.
@@ -27,18 +30,6 @@ def flip_coin(probability_of_heads = PROBABILITY_OF_HEADS):
 def user_bets(balance=0):
   return "heads", 5
 
-def simulate_many_games(games=10):
-# returns an array of arrays of the balance over time
-  results = []	# it's an array - is this necessary?
-  for i in range(games):
-#     winnings, n = play_the_game()
-#     ### TODO: what data structure to keep results so I can analyze the set?
-#     print ("After ", n, " flips the final balance was ", winnings)
-    results.append(play_the_game())
-
-  # print(results)
-  return results
-  
 
 def play_the_game():
   ### returns final balance and number of flips (watch out for fail on final)
@@ -76,14 +67,23 @@ def play_the_game():
   # return balance, i+1	# zero based iter
   return balance_over_time
 
-### main
-# winnings, n = play_the_game()
-# print ("After ", n, " flips the final balance was ", winnings)
-# if winnings <= 0:
-#   print("LOSS")
+def simulate_many_games(games=10):
+# returns an array of arrays of the balance over time
+  results = []	# it's an array - is this necessary?
+  for i in range(games):
+#     winnings, n = play_the_game()
+#     ### TODO: what data structure to keep results so I can analyze the set?
+#     print ("After ", n, " flips the final balance was ", winnings)
+    results.append(play_the_game())
 
+  # print(results)
+  return results
+  
+### main
+
+# TODO: how many simulations failed?  Seems like you can count last
+# array element == 0 to see failure
 all_ys = simulate_many_games(NGAMES)
-# all_xs = [np.arange(100, dtype='float64') for _ in range(N)]
 all_xs = [np.arange(NFLIPS, dtype='int') for _ in range(NGAMES)]
 
 
