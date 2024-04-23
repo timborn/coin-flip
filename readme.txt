@@ -1,4 +1,4 @@
-Tue Apr 23 02:53:55 MST 2024
+Tue Apr 23 07:03:54 MST 2024
 ----------------------------
 
 Elm Wealth's Coin Flip Challenge is a game on elmwealth.com where
@@ -11,6 +11,7 @@ Start with $25.  Game over when you get to zero.  n=300 flips
 
 https://elmwealth.com/coin-flip/
 See Also: The Missing Billionaires (book)
+See Also: Kelly Criteria
 
 Getting Started
 ===============

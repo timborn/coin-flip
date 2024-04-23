@@ -40,11 +40,31 @@ def flip_coin(probability_of_heads = PROBABILITY_OF_HEADS):
 ### That is the pair that should be returned.
 ###
 def user_bets(balance):
-  return user_bets_simpleton(balance)
+  # return user_bets_simpleton(balance)
+  # return user_bets_thirds(balance)
+  # return user_bets_cheapskate(balance)
+  # return user_bets_ten(balance)
+  return user_bets_ten_percent(balance)
 
 ### I AM A SIMPLETON
 def user_bets_simpleton(balance):
   return "heads", 5
+
+### THIRDS
+def user_bets_thirds(balance):
+  return "heads", int(balance/3)
+
+### CHEAPSKATE
+def user_bets_cheapskate(balance):
+  return "heads", 2.50
+
+### TEN
+def user_bets_ten(balance):
+  return "heads", min(10, balance)
+
+### TEN PERCENT
+def user_bets_ten_percent(balance):
+  return "heads", int(balance/10)
 
 
 def play_the_game():
