@@ -20,8 +20,12 @@ def user_bets(balance=0):
   return "heads", 5
 
 def simulate_many_games(games=10):
-  ### something goes here
-  print("TODO")
+  for i in range(games):
+    winnings, n = play_the_game()
+    ### TODO: what data structure to keep results so I can analyze the set?
+    print ("After ", n, " flips the final balance was ", winnings)
+    
+  
 
 def play_the_game():
   ### returns final balance and number of flips (watch out for fail on final)
@@ -54,7 +58,9 @@ def play_the_game():
   return balance, i+1	# zero based iter
 
 ### main
-winnings, n = play_the_game()
-print ("After ", n, " flips the final balance was ", winnings)
-if winnings <= 0:
-  print("LOSS")
+# winnings, n = play_the_game()
+# print ("After ", n, " flips the final balance was ", winnings)
+# if winnings <= 0:
+#   print("LOSS")
+
+simulate_many_games(20)
