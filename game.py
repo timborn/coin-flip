@@ -1,6 +1,9 @@
 import random
 
-def flip_coin(probability_of_heads = 0.6):
+PROBABILITY_OF_HEADS = 0.6
+NFLIPS = 300
+
+def flip_coin(probability_of_heads = PROBABILITY_OF_HEADS):
   """Flips an unfair coin with the given probability of heads.
 
   Args:
@@ -16,6 +19,7 @@ def flip_coin(probability_of_heads = 0.6):
   else:
     return "tails"
 
+### I AM A SIMPLETON
 def user_bets(balance=0):
   return "heads", 5
 
@@ -30,7 +34,7 @@ def simulate_many_games(games=10):
 def play_the_game():
   ### returns final balance and number of flips (watch out for fail on final)
   balance=25
-  for i in range(300):
+  for i in range(NFLIPS):
     # Flip an unfair coin 
     coin_flip = flip_coin()
     guess, bet = user_bets(balance)
