@@ -60,7 +60,12 @@ def user_bets_simpleton(balance):
 
 ### THIRDS
 def user_bets_thirds(balance):
-  return "thirds", "heads", int(balance/3)
+  # account for those last few dollars
+  bet = int(balance/3)
+  if (bet == 0): 
+    bet = balance
+  # return "thirds", "heads", int(balance/3)
+  return "thirds", "heads", bet
 
 ### CHEAPSKATE
 def user_bets_cheapskate(balance):
