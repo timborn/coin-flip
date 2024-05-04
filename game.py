@@ -64,7 +64,6 @@ def user_bets_thirds(balance):
   bet = int(balance/3)
   if (bet == 0): 
     bet = balance
-  # return "thirds", "heads", int(balance/3)
   return "thirds", "heads", bet
 
 ### CHEAPSKATE
@@ -77,7 +76,10 @@ def user_bets_ten(balance):
 
 ### TEN PERCENT
 def user_bets_ten_percent(balance):
-  return "ten percent", "heads", int(balance/10)
+  bet = int(balance/10)
+  if (bet == 0):
+    bet = balance
+  return "ten percent", "heads", bet
 
 
 def play_the_game(strat_selector):
