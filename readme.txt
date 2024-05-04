@@ -1,4 +1,4 @@
-Tue Apr 23 07:03:54 MST 2024
+Sat May  4 09:34:16 MST 2024
 ----------------------------
 
 Elm Wealth's Coin Flip Challenge is a game on elmwealth.com where
@@ -8,6 +8,13 @@ up heads, and players can bet any amount of money in their balance
 on each flip.
 
 Start with $25.  Game over when you get to zero.  n=300 flips
+
+The question is: how do you decide how much to bet each time?
+Think of an answer, then code your own version of user_bets() in game.py.
+There are plenty of examples there to crib from.
+
+You can test your solution against some of the other solutions people 
+have come up with.  The differences are pretty amazing!
 
 https://elmwealth.com/coin-flip/
 See Also: The Missing Billionaires (book)
